@@ -76,3 +76,49 @@ unsigned is_zero_plentiful (size_t length, const short array[length])
 
     return seq_q;
 }
+
+/// Kata: Handshake problem
+/// Every year he takes photos of farmers handshaking.
+/// Johnny knows that no two farmers handshake more than once.
+/// He also knows that some of the possible handshake combinations may not happen.
+/// However, Johnny would like to know the minimal amount of people
+/// that participated this year just by counting all the handshakes.
+/// Help Johnny by writing a function,
+/// that takes the amount of handshakes and returns the minimal amount of people
+/// needed to perform these handshakes (a pair of farmers handshake only once).
+int is_perfect_square(long double x)
+{
+    // Find floating point value of
+    // square root of x.
+    if (x >= 0) {
+        long long sr = sqrt(x);
+        // if product of square root
+        //is equal, then
+        // return T/F
+        return (sr * sr == x);
+    }
+    // else return false if n<0
+    return 0;
+}
+
+int get_participants(int handshakes) {
+    /* The solution is about finding parameter 'n'
+    in the number of combinations without repetition
+    of n(number of farmers) by 2(min amount of fermers for handshake):
+    (C_n)^2 = handshakes -> just need to solve the quadratic equation
+    and choose a minimal one positive root: n!/[ 2! * (n-2)!] = (n-1)*n/2 = handshakes
+    --> n^2 -n -2*handhsakes = 0 */
+
+    /// n^2 -n -2*handshakes -- parabola with only one positive root or null
+    /// --> if handshakes is not NULL then choosing a positive one root
+    int root = 0;
+    if(handshakes){
+        double descriminant = 1 + 8*handshakes;
+        /// check if descriminant has decimal root
+        if(is_perfect_square(descriminant))
+            root = 1 + (int)sqrt(descriminant)/2;
+        else
+            root = ceil(1 + ceil(sqrt(descriminant))/2);
+    }
+    return root;
+}
