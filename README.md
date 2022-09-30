@@ -1,2 +1,2 @@
-# C_practice
-This repo contains different C-implemented tasks.
+# C-Cpp_practice
+This repo contains different C-implemented and C++-implemented tasks.
