@@ -122,3 +122,36 @@ int get_participants(int handshakes) {
     }
     return root;
 }
+
+
+/// Kata: Number of trailing zeros in N!
+// Write a program that will calculate the number of trailing zeros in a factorial of a given number.
+// N! = 1 * 2 * 3 *  ... * N
+// Be careful 1000! has 2568 digits...
+// For more info, see: http://mathworld.wolfram.com/Factorial.html 
+
+// Examples:
+// zeros(6) = 1
+// 6! = 1 * 2 * 3 * 4 * 5 * 6 = 720 --> 1 trailing zero
+// zeros(12) = 2
+// 12! = 479001600 --> 2 trailing zeros
+// Hint: You're not meant to calculate the factorial. Find another way to find the number of zeros.
+
+/* According to https://mathworld.wolfram.com/Factorial.html 
+   the number Z of trailing zeros for n! can be calculated as:
+   Z = sum from 1 to [log5^n] ( [ n / 5 ^ [log5^n] ] ), 
+   where [] ~ floor(), log5^n ~ log(n)/log(5)
+*/
+long zeros(long n) {
+  
+  unsigned k_max = (unsigned)floor(log(n)/log(5));
+
+  long Z = 0;
+  
+  for(unsigned k = 1; k <= k_max; ++k)
+    Z += floor(n / pow(5, k));
+  
+  return Z;
+}
+
+
