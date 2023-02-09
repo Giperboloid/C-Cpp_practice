@@ -21,7 +21,7 @@ int find_odd (size_t length, const int array[length])
             if(i != j && array[i]==array[j])
                 ++times; //increasing 'times' quantity
         }
-        if(times%2!=0) //checking is 'times' variable odd?
+        if(times & 1) //checking is 'times' variable odd?
             return array[i];
     }
     return 0;
