@@ -155,3 +155,53 @@ long zeros(long n) {
 }
 
 
+// Kata: RGB to Hex Conversion
+// The rgb function is incomplete. 
+// Complete it so that passing in RGB decimal values will result in a hexadecimal representation being returned.
+// Valid decimal values for RGB are 0 - 255. Any values that fall out of that range must be rounded to the closest valid value.
+// 
+// Note: Your answer should always be 6 characters long, the shorthand with 3 will not work here.*/
+
+#define TOO_SMALL 2
+#define TOO_BIG 1
+#define OK 0
+
+#define GET_COLOR_STAT(color_num) ( \
+color_num < 0 ? TOO_SMALL : \
+( color_num > UINT8_MAX ? TOO_BIG : OK ) \
+)
+
+void rgb (int r, int g, int b, char hex[6 + 1])
+{
+  
+  *(hex + 6) = '\0';
+  char *pos = (char *) hex;
+  
+  int color_arr[3] = {r, g, b};
+  
+  for(uint8_t i = 0; i < 3; ++i) {
+    
+    switch(GET_COLOR_STAT(color_arr[i])) {
+      
+      case OK : {
+        sprintf(pos, "%02X", color_arr[i]);
+        break;
+      }
+      
+      case TOO_BIG : {
+        sprintf(pos, "FF");
+        break;
+      }
+      
+      case TOO_SMALL : {
+        sprintf(pos, "00");
+        break;
+      }
+        
+    }
+  
+    pos+=2;
+
+  }
+}
+
