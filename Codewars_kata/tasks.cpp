@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cctype>
+#include<unordered_map>
 
 
 /// Kata: Isograms
@@ -48,5 +49,36 @@ uint64_t descendingOrder(uint64_t a)
 }
 
 
+/// Kata: Delete occurrences of an element if it occurs more than n times
 
+// Given a list and a number, create a new list that contains each number of list at most N times, without reordering.
+// For example if the input number is 2, and the input list is [1,2,3,1,2,1,2,3], 
+// you take [1,2,3,1,2], drop the next [1,2] since this would lead to 1 and 2 being in the result 3 times, and then take 3,
+// which leads to [1,2,3,1,2,3]. With list [20,37,20,21] and number 1, the result would be [20,37,21].
     
+std::vector<int> deleteNth(std::vector<int> arr, int n)
+{
+  
+  if(arr.size() < 2)
+    return arr;
+ 
+  std::unordered_map<int, int> u_map {};
+  
+  for(size_t i = 0; i < arr.size(); ++i)
+    ++u_map[arr[i]];
+ 
+  for(auto right_it {arr.rbegin()}; 
+      right_it != arr.rend(); ++right_it) 
+  {
+    if(u_map[*right_it] > n)
+    {
+      --u_map[*right_it];
+      arr.erase(--(right_it.base()));
+    }    
+  }
+  
+  return arr;
+  
+}
+
+
