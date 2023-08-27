@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cctype>
-#include<unordered_map>
+#include <unordered_map>
 
 
 /// Kata: Isograms
@@ -79,6 +79,42 @@ std::vector<int> deleteNth(std::vector<int> arr, int n)
   
   return arr;
   
+}
+
+
+
+/// Kata: Counting Duplicates
+
+// Write a function that will return the count of distinct case-insensitive alphabetic characters 
+// and numeric digits that occur more than once in the input string. The input string can be assumed 
+// to contain only alphabets (both uppercase and lowercase) and numeric digits.
+
+/* 
+Examples: 
+"abcde" -> 0 # no characters repeats more than once
+"aabbcde" -> 2 # 'a' and 'b'
+"aabBcde" -> 2 # 'a' occurs twice and 'b' twice (`b` and `B`)
+"indivisibility" -> 1 # 'i' occurs six times
+"Indivisibilities" -> 2 # 'i' occurs seven times and 's' occurs twice
+"aA11" -> 2 # 'a' and '1'
+"ABBA" -> 2 # 'A' and 'B' each occur twice
+*/
+size_t duplicateCount(const std::string& in)
+{
+  
+  size_t counter = 0;
+  std::unordered_map<char, int> u_map{};
+  
+  for(const auto& sym : in)
+    ++u_map[std::tolower(static_cast<unsigned char>(sym))];
+
+  std::for_each(u_map.begin(), u_map.end(), 
+                [&counter](std::pair<const char, int>& map_e){
+                  if (map_e.second > 1)
+                    ++counter;
+                });
+  
+  return counter;
 }
 
 
