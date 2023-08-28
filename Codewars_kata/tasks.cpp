@@ -24,6 +24,7 @@ bool is_isogram(std::string str) {
 }
 
 
+
 /// Kata: Descending Order
 
 // Your task is to make a function that can take any non-negative integer as an argument 
@@ -47,6 +48,7 @@ uint64_t descendingOrder(uint64_t a)
   
   return result;
 }
+
 
 
 /// Kata: Delete occurrences of an element if it occurs more than n times
@@ -116,5 +118,100 @@ size_t duplicateCount(const std::string& in)
   
   return counter;
 }
+
+
+
+/// Kata: Integers: Recreation One
+
+// Find all integers between m and n (m and n integers with 1 <= m <= n) such
+// that the sum of their squared divisors is itself a square. 
+
+/* Examples 
+   1, 246, 2, 123, 3, 82, 6, 41 are the divisors of number 246. Squaring these divisors we get: 1, 
+   60516, 4, 15129, 9, 6724, 36, 1681. The sum of these squares is 84100 which is 290 * 290.
+ */
+class SumSquaredDivisors
+{
+  
+private:
+  
+    static std::set<long long> GetNotPrimeNumbers(long long m, long long n) {
+      
+      /*
+       * Let's use Sieve of Eratosthenes Method
+       */
+      std::vector<bool> arr(n + 1, true);
+      std::set<long long> result{};
+    
+      arr[0] = arr[1] = false;
+    
+      for(long long i = 2; i*i <= n; ++i)
+         if(true == arr[i])
+              for(auto j = i*i; j <= n; j+=i)
+                  arr[j] = false;
+                
+      std::for_each(arr.begin(), arr.end(), [&result, m, idx = 0] (bool is_prime) mutable {
+          if(not is_prime && idx >= m)
+              result.insert(idx);
+          ++idx;    
+      });            
+    
+      return result;    
+    }
+  
+    static long long GetDevisorsSquaredSum(long long num) {
+      
+      long long devisor = 0, sqr_sum = 0;
+      
+      for (devisor = 1; devisor * devisor < num; ++devisor) {
+          if (num % devisor == 0)
+              sqr_sum += devisor * devisor;
+      }
+      
+      if (devisor - (num / devisor) == 1) {
+          --devisor;
+      }
+    
+       for (; devisor >= 1; --devisor) {
+         if (num % devisor == 0)
+              sqr_sum += (num / devisor) * (num / devisor);
+      }
+      
+      return sqr_sum;
+    }
+  
+  
+public:
+  
+    static std::vector<std::pair<long long, long long>> listSquared(long long m, long long n) {
+      
+      std::vector<std::pair<long long, long long>> result{};
+      
+      /* 
+       * First of all we need filter out prime numbers - they exactly don't match to our criteria:
+       * the sum of squared devisors of an prime number can't be an square -> because this sum equals 
+       * 1 + some_square.
+       */
+      auto not_prime_numbers{GetNotPrimeNumbers(m, n)};
+      
+      if(not not_prime_numbers.empty()) {
+        
+        for(const auto& not_prime : not_prime_numbers) {
+        
+          auto sqr_sum {GetDevisorsSquaredSum(not_prime)};
+        
+          long long sqr_sum_root = sqrt(sqr_sum);
+        
+          if(sqr_sum_root * sqr_sum_root == sqr_sum)
+          result.push_back({not_prime, sqr_sum});
+        }
+        
+      }
+      
+      return result;
+    }
+};
+
+
 
 
