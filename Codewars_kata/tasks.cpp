@@ -215,3 +215,35 @@ public:
 
 
 
+/// Kata: Perimeter of squares in a rectangle
+
+/// The drawing shows 6 squares the sides of which have a length 
+/// of 1, 1, 2, 3, 5, 8. It's easy to see that the sum of the perimeters of these 
+/// squares is : 4 * (1 + 1 + 2 + 3 + 5 + 8) = 4 * 20 = 80.
+typedef unsigned long long ull;
+
+class SumFct
+{
+  
+  private:
+  
+      static ull FebSeqSum(int count, ull prev, ull curr) {
+        
+        ull result = curr;
+
+        if(--count)         
+          result += FebSeqSum(count, curr, curr + prev);
+        
+        return result;
+        
+      }
+  
+  
+  public:
+  
+       static ull perimeter(int n) {
+         return 4 * (FebSeqSum(n, 1, 1) + 1);
+       }
+  
+};
+
