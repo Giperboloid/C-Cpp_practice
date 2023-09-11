@@ -247,3 +247,36 @@ class SumFct
   
 };
 
+
+
+/// Kata: Replace With Alphabet Position
+// In this kata you are required to, given a string, replace every letter with its position in the alphabet.
+// If anything in the text isn't a letter, ignore it and don't return it.
+// "a" = 1, "b" = 2, etc.
+
+std::string alphabet_position(const std::string &text) {
+
+  std::string result;
+  
+  for(const char symb : text) {
+    
+    auto ascii_code = static_cast<int>(symb);
+    int pos = 0;
+    
+    if(ascii_code >= 65 && ascii_code <= 90) 
+       pos = ascii_code - 65 + 1;
+    else if (ascii_code >= 97 && ascii_code <= 122)
+       pos = ascii_code - 97 + 1;
+    else
+      continue;
+    
+    result += (std::to_string(pos) + ' ');
+  }
+  
+  if(!result.empty())
+     result.pop_back();
+  
+  return result;
+    
+}
+
